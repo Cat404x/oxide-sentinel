@@ -1,0 +1,15 @@
+[package]
+name = "system_info"
+version = "0.1.0"
+edition = "2021"
+description = "Oxide Sentinel collector – OS and hostname telemetry"
+
+[[bin]]
+name = "system_info"
+path = "src/main.rs"
+
+[dependencies]
+chrono = { version = "0.4", features = ["serde"] }
+hostname = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

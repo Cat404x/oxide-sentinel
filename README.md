@@ -27,21 +27,48 @@ Oxide Sentinel is built around strict separation of responsibilities:
 
 ---
 
-## Project Structure (Planned)
+## Project Structure
 
 ```
 oxide-sentinel/
-├── control/        # Python control plane
-├── collectors/     # Rust collectors
-├── schemas/        # JSON schemas
-├── reports/        # Output formatting
-└── docs/
+├── control/                        # Python control plane
+│   ├── main.py                     # CLI entry point (argparse)
+│   ├── orchestrator.py             # Runs Rust collectors via subprocess
+│   └── scoring.py                  # Placeholder risk scoring
+├── collectors/
+│   ├── system_info/                # Rust collector: OS / hostname telemetry
+│   │   ├── Cargo.toml
+│   │   └── src/main.rs
+│   └── bin/                        # Compiled collector executables (gitignored binaries)
+├── shared/
+│   └── schemas/
+│       └── telemetry.schema.json   # JSON schema for the telemetry envelope
+└── README.md
+```
+
+---
+
+## Quickstart
+
+### 1. Build the `system_info` collector
+
+```bash
+cd collectors/system_info
+cargo build --release
+cp target/release/system_info ../bin/system_info
+```
+
+### 2. Run the control plane
+
+```bash
+cd control
+python main.py                          # uses system_info by default
+python main.py --collector system_info  # explicit collector name
 ```
 
 ---
 
 ## Status
 
-Initial scaffold phase.
-Architecture being defined.
-Collectors not yet implemented.
+Initial scaffold complete.
+Collectors implemented: `system_info`.
